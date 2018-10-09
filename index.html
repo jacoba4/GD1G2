@@ -5,7 +5,10 @@
     <title>Learning Phaser</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
 	<script type ="text/javascript" src="js/preload.js"></script>
-	<script type ="text/javascript" src="js/gameplay.js"></script>
+	<script type ="text/javascript" src="js/mainMenu.js"></script>
+	<script type ="text/javascript" src="js/pauseMenu.js"></script>
+	<script type ="text/javascript" src="js/fight.js"></script>
+	<script type ="text/javascript" src="js/shop.js"></script>
   <style type="text/css">
       body {
           margin: 0;
@@ -14,9 +17,12 @@
 </head>
 <body>
 	<script type="text/javascript">
-		let game = new Phaser.Game(800, 600, Phaser.AUTO	);
+		let game = new Phaser.Game(800, 600, Phaser.AUTO);
 		game.state.add("Preload", preloadSate);
-		game.state.add("Gameplay", gamePlayState);
+		game.state.add("MainMenu", mainMenuState);
+		game.state.add("PauseMenu", pauseMenu);
+		game.state.add("Fight", fightState);
+		game.state.add("Shop", shopState);
 		game.state.start("Preload");
 	</script>
 
