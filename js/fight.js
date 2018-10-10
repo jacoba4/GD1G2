@@ -3,10 +3,10 @@ let fightState = function(){};
 fightState.prototype.create = function () {
   game.add.sprite(0,0,"fight"); // load the background
   this.player = game.add.sprite(160, 300, "player"); // 845 X 560 elephant size
-  this.player.state = "idle"
+  this.player.state = "low block"
   this.enemy = game.add.sprite(1430, 300, "enemy");
   this.enemy.state = "ready to act"; // stores the current state of the enemy
-  this.enemy.action = "null"; // stores the current action ie. blocking, attacking
+  this.enemy.action = "nul"; // stores the current action ie. blocking, attacking
   this.enemy.appliedDefense = 0;
   this.enemy.actionTimer = 0;
   this.enemy.actionSequence = [];
@@ -49,8 +49,6 @@ fightState.prototype.update = function () {
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
   if (enemy.state === "ready to act") { // decide on an action or sequence of actions
     let actionVariable = Math.random()
-    console.log(actionVariable);
-    console.log("thinking");
     if(player.state === "idle"){
       if(actionVariable > (0.8 - enemy.skill *0.05)){
         enemy.actionSequence = ["high attack"];
@@ -66,16 +64,17 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
       }
     }
     else if(player.state === "high attack"){
+      console.log(actionVariable);
       if(actionVariable > (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["high attack"];
       }
-        if(actionVariable > (0.6 * 0.1 *enemy.skill) && actionVariable <= (0.8+0.05*enemy.skill)){
+        if(actionVariable > (0.6 + 0.1 *enemy.skill) && actionVariable <= (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > (0.3 + 0.05 * enemy.skill) && actionVariable <= (0.6 * 0.1 *enemy.skill)){
+      if(actionVariable > (0.3 + 0.05 * enemy.skill) && actionVariable <= (0.6 + 0.1 *enemy.skill)){
         enemy.actionSequence = ["high block"];
       }
-      if(actionVariable <= 0.(0.3 + 0.05 * enemy.skill)){
+      if(actionVariable <= (0.3 + 0.05 * enemy.skill)){
         enemy.actionSequence = ["low block"];
       }
     }
@@ -83,13 +82,13 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
       if(actionVariable > (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["high attack"];
       }
-      if(actionVariable > (0.6 * 0.1 *enemy.skill) && actionVariable <= (0.8+0.05*enemy.skill)){
+      if(actionVariable > (0.6 + 0.1 *enemy.skill) && actionVariable <= (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > (0.3 + 0.05 * enemy.skill) && actionVariable <= (0.6 * 0.1 *enemy.skill)){
+      if(actionVariable > (0.3 + 0.05 * enemy.skill) && actionVariable <= (0.6 + 0.1 *enemy.skill)){
         enemy.actionSequence = ["high block"];
       }
-      if(actionVariable <= 0.(0.3 + 0.05 * enemy.skill)){
+      if(actionVariable <= (0.3 + 0.05 * enemy.skill)){
         enemy.actionSequence = ["low block"];
       }
     }
@@ -100,7 +99,7 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
       if(actionVariable > (0.4-0.1*enemy.skill) && actionVariable <= (0.8 - 0.15 * enemy.skill)){
         enemy.actionSequence = ["high attack"];
       }
-      if(actionVariable > (0.4-0.1*enemy.skill) && actionVariable <= (0.2 - 0.05*enemy.skill)){
+      if(actionVariable >(0.2 - 0.05*enemy.skill)  && actionVariable <= (0.4-0.1*enemy.skill)){
         enemy.actionSequence = ["high block"];
       }
       if(actionVariable <= (0.2 - 0.05*enemy.skill)){
@@ -114,7 +113,7 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
       if(actionVariable > (0.4-0.1*enemy.skill) && actionVariable <= (0.8 - 0.15 * enemy.skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > (0.4-0.1*enemy.skill) && actionVariable <= (0.2 - 0.05*enemy.skill)){
+      if(actionVariable >(0.2 - 0.05*enemy.skill)  && actionVariable <= (0.4-0.1*enemy.skill)){
         enemy.actionSequence = ["high block"];
       }
       if(actionVariable <= (0.2 - 0.05*enemy.skill)){
