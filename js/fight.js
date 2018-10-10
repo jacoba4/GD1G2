@@ -7,6 +7,8 @@ fightState.prototype.create = function () {
   this.enemy.state = "ready to act"; // stores the current state of the enemy
   this.enemy.action = "null"; // stores the current action ie. blocking, attacking
   this.enemy.appliedDefense = 0;
+  this.enemy.actionSequence = [];
+  let currentLevel =1;
   if (currentLevel===1){ // assign enemy stats per level
     this.enemy.attack = 1;
     this.enemy.defense = 1;
@@ -43,6 +45,7 @@ fightState.prototype.update = function () {
 };
 
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
+  console.log(enemy.actionSequence);
   if (enemy.state === "ready to act") { // decide on an action or sequence of actions
     let actionVariable = Math.random()
     if(player.state === "idle"){
