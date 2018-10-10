@@ -3,8 +3,8 @@ let fightState = function(){};
 fightState.prototype.create = function () {
   //add player and enemies, ground, music, ui
   game.add.sprite(0,0,"fight");
-  this.player = game.add.sprite(800, 500, "player"); // 845 X 560 elephant size
-  this.enemy = game.add.sprite(1600, 500, "enemy");
+  this.player = game.add.sprite(160, 500, "player"); // 845 X 560 elephant size
+  this.enemy = game.add.sprite(1430, 500, "enemy");
   this.enemy.state = "ready to act";
   this.enemy.attack = 1;
   this.enemy.defense = 1;
