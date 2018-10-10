@@ -37,58 +37,58 @@ fightState.prototype.enemyBehavior = function (player,enemy) {
       }
     }
     else if(player.state === "high attack"){
-      if(actionVariable > 0.85){
+      if(actionVariable > (0.8+0.05*skill)){
         enemy.actionSequence = ["high attack"];
       }
-      if(actionVariable > 0.7 && actionVariable <= 0.85){
+        if(actionVariable > (0.6 * 0.1 *skill) && actionVariable <= (0.8+0.05*skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > 0.35 && actionVariable <= 0.7){
+      if(actionVariable > (0.3 + 0.05 * skill) && actionVariable <= (0.6 * 0.1 *skill)){
         enemy.actionSequence = ["high block"];
       }
-      if(actionVariable <= 0.35){
+      if(actionVariable <= 0.(0.3 + 0.05 * skill)){
         enemy.actionSequence = ["low block"];
       }
     }
     else if(player.state === "low attack"){
-      if(actionVariable > 0.85){
+      if(actionVariable > (0.8+0.05*skill)){
         enemy.actionSequence = ["high attack"];
       }
-      if(actionVariable > 0.7 && actionVariable <= 0.85){
+      if(actionVariable > (0.6 * 0.1 *skill) && actionVariable <= (0.8+0.05*skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > 0.35 && actionVariable <= 0.7){
+      if(actionVariable > (0.3 + 0.05 * skill) && actionVariable <= (0.6 * 0.1 *skill)){
         enemy.actionSequence = ["high block"];
       }
-      if(actionVariable <= 0.35){
+      if(actionVariable <= 0.(0.3 + 0.05 * skill)){
         enemy.actionSequence = ["low block"];
       }
     }
     else if(player.state === "high block"){
-      if(actionVariable > 0.65){
-        enemy.actionSequence = ["high attack"];
-      }
-      if(actionVariable > 0.3 && actionVariable <= 0.65){
+      if(actionVariable > (0.8 - 0.15 * skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > 0.3 && actionVariable <= 0.15){
+      if(actionVariable > (0.4-0.1*skill) && actionVariable <= (0.8 - 0.15 * skill)){
+        enemy.actionSequence = ["high attack"];
+      }
+      if(actionVariable > (0.4-0.1*skill) && actionVariable <= (0.2 - 0.05*skill)){
         enemy.actionSequence = ["high block"];
       }
-      if(actionVariable <= 0.15){
+      if(actionVariable <= (0.2 - 0.05*skill)){
         enemy.actionSequence = ["low block"];
       }
     }
     else if(player.state === "low block"){
-      if(actionVariable > 0.65){
+      if(actionVariable > (0.8 - 0.15 * skill)){
         enemy.actionSequence = ["high attack"];
       }
-      if(actionVariable > 0.3 && actionVariable <= 0.65){
+      if(actionVariable > (0.4-0.1*skill) && actionVariable <= (0.8 - 0.15 * skill)){
         enemy.actionSequence = ["low attack"];
       }
-      if(actionVariable > 0.3 && actionVariable <= 0.15){
+      if(actionVariable > (0.4-0.1*skill) && actionVariable <= (0.2 - 0.05*skill)){
         enemy.actionSequence = ["high block"];
       }
-      if(actionVariable <= 0.15){
+      if(actionVariable <= (0.2 - 0.05*skill)){
         enemy.actionSequence = ["low block"];
       }
     }
