@@ -8,5 +8,5 @@ preloadSate.prototype.preload = function () {
 };
 
 preloadSate.prototype.create = function () {
-  game.state.start("MainMenu");
+  game.state.start("Fight");
 };
