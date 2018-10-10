@@ -37,11 +37,74 @@ fightState.prototype.create = function () {
     this.enemy.health = 10;
     this.enemy.skill = 4;
   }
+
+  game.input.mouse.capture = true;
+  this.player.leftdown = false;
+  this.player.swipedtop = false;
+  this.player.swipedright = false;
+  this.player.slope = 0;
+  this.debugtext = game.add.text(16, 16, "State: ", {fontSize: "32px", fill: "#000000"});
+
 };
 
 fightState.prototype.update = function () {
   //fighting and stuff
   this.enemyBehavior(this.player,this.enemy);
+  this.PlayerInput();
+  this.debugtext.text = "State: " + this.player.leftdown;
+  console.log(this.player.leftdown);
+};
+
+
+fightState.prototype.PlayerInput = function (){
+	this.player.swipestartx;
+	this.player.swipestarty;
+	this.player.swipeendx;
+	this.player.swipeendy;
+
+	if(!this.player.leftdown && game.input.activePointer.isDown){
+		this.player.leftdown = true;
+		this.player.swipestartx = game.input.mousePointer.x;
+		this.player.swipestarty = game.input.mousePointer.y;
+		}
+	else if(this.player.leftdown && game.input.activePointer.isUp){
+		this.player.leftdown = false;
+		this.player.swipeendx = game.input.mousePointer.x;
+		this.player.swipeendy = game.input.mousePointer.y;
+		this.Swipe(this.player.swipestartx,this.player.swipestarty,this.player.swipeendx,this.player.swipeendy);
+	}
+};
+
+fightState.prototype.Swipe = function (swipestartx,swipestartx,swipeendx,swipeendy){
+
+	slope = (swipeendy - swipestarty)/(swipeendx - swipestartx);
+	swipedright = swipestartx < swipeendx;
+	swipedtop = swipestarty > window.screen.height;
+
+	if(swipedright){
+		if(swipedtop){
+			//HIGH ATTACK
+			player.state = "high attack";
+			game.debug.text("HIGH ATTACK");
+		}
+		else{
+			//LOW ATTACK
+			player.state = "low attack";
+			game.debug.text("LOW ATTACK");
+		}
+	}
+	else{
+		if(swipedtop){
+			//HIGH BLOCK
+			player.state = "high block";
+			game.debug.text("HIGH BLOCK");
+		}
+		else{
+			//LOW BLOCK
+			player.state = "low block";
+			game.debug.text("LOW BLOCK");
+		}
+	}
 };
 
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
