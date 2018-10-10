@@ -43,7 +43,17 @@ fightState.prototype.create = function () {
   this.player.swipedtop = false;
   this.player.swipedright = false;
   this.player.slope = 0;
-  this.debugtext = game.add.text(16, 16, "State: ", {fontSize: "32px", fill: "#000000"});
+  this.player.state = "ready to act";
+  this.player.actionframe = 0;
+
+  
+  this.player.attack = 5;
+  this.player.defense = 1;
+  this.player.speed = 60;
+  this.player.health = 10;
+
+  this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "32px", fill: "#000000"});
+  this.enemyhptext = game.add.text(16, 64, "HP: ", {fontSize: "32px", fill: "#000000"});
 
 };
 
@@ -51,8 +61,11 @@ fightState.prototype.update = function () {
   //fighting and stuff
   this.enemyBehavior(this.player,this.enemy);
   this.PlayerInput();
-  this.debugtext.text = "State: " + this.player.leftdown;
-  console.log(this.player.leftdown);
+  this.playerhptext.text = "Player HP: " + this.player.health;
+  this.enemyhptext.text = "Enemy HP: " + this.enemy.health;
+  if(this.player.actionframe < this.player.speed){
+  	this.player.actionframe++;
+  }
 };
 
 
@@ -61,6 +74,10 @@ fightState.prototype.PlayerInput = function (){
 	this.player.swipestarty;
 	this.player.swipeendx;
 	this.player.swipeendy;
+
+	if(this.player.actionframe < this.player.speed){
+		return;
+	}
 
 	if(!this.player.leftdown && game.input.activePointer.isDown){
 		this.player.leftdown = true;
@@ -75,40 +92,42 @@ fightState.prototype.PlayerInput = function (){
 	}
 };
 
-fightState.prototype.Swipe = function (swipestartx,swipestartx,swipeendx,swipeendy){
-
+fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeendy){
+	this.player.actionframe = 0;
 	slope = (swipeendy - swipestarty)/(swipeendx - swipestartx);
 	swipedright = swipestartx < swipeendx;
-	swipedtop = swipestarty > window.screen.height;
+	swipedtop = swipestarty < window.screen.height/2;
 
 	if(swipedright){
 		if(swipedtop){
 			//HIGH ATTACK
-			player.state = "high attack";
-			game.debug.text("HIGH ATTACK");
+			this.player.state = "high attack";
+			this.DamageCalc(this.player,this.enemy);
 		}
 		else{
 			//LOW ATTACK
-			player.state = "low attack";
-			game.debug.text("LOW ATTACK");
+			this.player.state = "low attack";
+			this.DamageCalc(this.player,this.enemy);
 		}
 	}
 	else{
 		if(swipedtop){
 			//HIGH BLOCK
-			player.state = "high block";
-			game.debug.text("HIGH BLOCK");
+			this.player.state = "high block";
 		}
 		else{
 			//LOW BLOCK
-			player.state = "low block";
-			game.debug.text("LOW BLOCK");
+			this.player.state = "low block";
 		}
 	}
 };
 
+fightState.prototype.DamageCalc = function (attacker,defender){
+	defender.health -= game.math.max(0,(attacker.attack - defender.defense));
+};
+
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
-  console.log(enemy.actionSequence);
+  //console.log(enemy.actionSequence);
   if (enemy.state === "ready to act") { // decide on an action or sequence of actions
     let actionVariable = Math.random()
     if(player.state === "idle"){
