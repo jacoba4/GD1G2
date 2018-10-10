@@ -7,7 +7,6 @@ fightState.prototype.create = function () {
   this.enemy = game.add.sprite(1430, 300, "enemy");
   this.enemy.state = "ready to act"; // stores the current state of the enemy
   this.enemy.action = "nul"; // stores the current action ie. blocking, attacking
-  this.enemy.appliedDefense = 0;
   this.enemy.actionTimer = 0;
   this.enemy.actionSequence = [];
   let currentLevel =1;
@@ -45,10 +44,12 @@ fightState.prototype.create = function () {
   this.player.swipedtop = false;
   this.player.swipedright = false;
   this.player.slope = 0;
-  this.player.state = "ready to act";
+  this.player.state = "idle";
+  this.player.action = "null"
   this.player.actionframe = 0;
+  this.player.actionTimer = 0;
 
-  
+
   this.player.attack = 5;
   this.player.defense = 1;
   this.player.speed = 60;
@@ -68,8 +69,58 @@ fightState.prototype.update = function () {
   if(this.player.actionframe < this.player.speed){
   	this.player.actionframe++;
   }
+  this.updatePlayerAction(this.player);
+  this.checkForDamage(this.player, this.enemy);
 };
 
+fightState.prototype.checkForDamage = function (player,enemy) {
+
+};
+
+fightState.prototype.updatePlayerAction = function (player) {
+  if (player.state !== "null" && this.player.actionTimer===-1) {
+    this.player.actionTimer = 0;
+  }
+  if (actionTimer >=0) {
+    if (player.state === "high attack"){
+      if (player.actionTimer > 15 && player.actionTimer < 45){
+        player.action = "high attack";
+      }
+      else {
+        player.action = "null"
+      }
+    }
+    if (player.state === "low attack"){
+      if (player.actionTimer > 15 && player.actionTimer < 45){
+        player.action = "low attack";
+      }
+      else {
+        player.action = "null"
+      }
+    }
+    if (player.state === "high block"){
+      if (player.actionTimer > 15 && player.actionTimer < 45){
+        player.action = "high block";
+      }
+      else {
+        player.action = "null"
+      }
+    }
+    if (player.state === "low block"){
+      if (player.actionTimer > 15 && player.actionTimer < 45){
+        player.action = "low block";
+      }
+      else {
+        player.action = "null"
+      }
+    }
+    player.actionTimer++;
+  }
+  if (player.actionTimer> 60) {
+    player.actionTimer = -1;
+    player.state = "null";
+  }
+};
 
 fightState.prototype.PlayerInput = function (){
 	this.player.swipestartx;
@@ -104,12 +155,10 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 		if(swipedtop){
 			//HIGH ATTACK
 			this.player.state = "high attack";
-			this.DamageCalc(this.player,this.enemy);
 		}
 		else{
 			//LOW ATTACK
 			this.player.state = "low attack";
-			this.DamageCalc(this.player,this.enemy);
 		}
 	}
 	else{
@@ -146,7 +195,6 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
       }
     }
     else if(player.state === "high attack"){
-      console.log(actionVariable);
       if(actionVariable > (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["high attack"];
       }
