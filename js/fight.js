@@ -12,6 +12,7 @@ fightState.prototype.create = function () {
   this.enemy.speed = 1;
   this.enemy.health = 10;
   this.enemy.skill = 1;
+  this.enemy.action = "null";
 };
 
 fightState.prototype.update = function () {
@@ -104,22 +105,34 @@ fightState.prototype.enemyBehavior = function (player,enemy) {
       }
       if (enemy.actionSequence[0]=="high attack"){
         if (actionTimer>15 && actionTimer < 45) {
-          //hight attack
+          enemy.action = "high attack";
+        }
+        else{
+          enemy.action = "null";
         }
       }
       else if (enemy.actionSequence[0]=="low attack"){
         if (actionTimer>15 && actionTimer < 45) {
-          //low attack
+          enemy.action = "low attack";
+        }
+        else{
+          enemy.action = "null";
         }
       }
       else if (enemy.actionSequence[0]=="high block"){
         if (actionTimer>15 && actionTimer < 45) {
-          // high block
+          enemy.action = "high block";
+        }
+        else{
+          enemy.action = "null";
         }
       }
       else if (enemy.actionSequence[0]=="low block"){
         if (actionTimer>15 && actionTimer < 45) {
-          //low block
+          enemy.action = "low block";
+        }
+        else{
+          enemy.action = "null";
         }
       }
     }
@@ -131,5 +144,8 @@ fightState.prototype.enemyBehavior = function (player,enemy) {
   }
   else if (enemy.state === "cooling down") {
     enemy.cooldown -= enemy.speed;
+    if (enemy.cooldown <= 0){
+      enemy.state = "ready to act";
+    }
   }
 };
