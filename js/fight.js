@@ -69,7 +69,7 @@ fightState.prototype.update = function () {
   if(this.player.actionframe < this.player.speed){
   	this.player.actionframe++;
   }
-  this.updatePlayerAction(this.player);
+  //this.updatePlayerAction(this.player);
   this.checkForDamage(this.player, this.enemy);
 };
 
@@ -77,11 +77,12 @@ fightState.prototype.checkForDamage = function (player,enemy) {
 
 };
 
+
 fightState.prototype.updatePlayerAction = function (player) {
   if (player.state !== "null" && this.player.actionTimer===-1) {
     this.player.actionTimer = 0;
   }
-  if (actionTimer >=0) {
+  if (player.actionTimer >=0) {
     if (player.state === "high attack"){
       if (player.actionTimer > 15 && player.actionTimer < 45){
         player.action = "high attack";
@@ -154,20 +155,24 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 	if(swipedright){
 		if(swipedtop){
 			//HIGH ATTACK
+			console.log("high attack");
 			this.player.state = "high attack";
 		}
 		else{
 			//LOW ATTACK
+			console.log("low attack");
 			this.player.state = "low attack";
 		}
 	}
 	else{
 		if(swipedtop){
 			//HIGH BLOCK
+			console.log("high block");
 			this.player.state = "high block";
 		}
 		else{
 			//LOW BLOCK
+			console.log("low block");
 			this.player.state = "low block";
 		}
 	}
@@ -252,7 +257,7 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     }
     enemy.state = "mid action";
     enemy.actionTimer = 0;
-    console.log(enemy.actionSequence);
+    console.log("Enemy Action: " + enemy.actionSequence);
   }
   else if (enemy.state === "mid action") { // ensure the enemy carries out the decided upon actions
     if (enemy.actionSequence.length>0){
