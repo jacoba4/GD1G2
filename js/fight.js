@@ -11,7 +11,8 @@ fightState.prototype.create = function () {
   this.music.play();
   this.music.volume = .1;
 
-  framerate = 5;
+  framerate = 6;
+  idletimer = 1000;
   game.add.sprite(0,0,"fight"); // load the background
   this.player = game.add.sprite(160, 300, "playeridle"); // 845 X 560 elephant size
   this.player.animations.add('idle', [3,4,5,9,10,11],framerate);
@@ -37,7 +38,7 @@ fightState.prototype.create = function () {
   this.enemy.animations.play('idle', framerate, true);
   this.enemy.scale.x *= -1;
   this.enemy.state = "ready to act"; // stores the current state of the enemy
-  this.enemy.action = "nul"; // stores the current action ie. blocking, attacking
+  this.enemy.action = "null"; // stores the current action ie. blocking, attacking
   this.enemy.actionTimer = 0;
   this.enemy.actionSequence = [];
 
@@ -109,7 +110,9 @@ fightState.prototype.update = function () {
   }
   //this.updatePlayerAction(this.player);
   this.checkForDamage(this.player, this.enemy);
-
+  if(this.player.animations.isPlaying == false){
+  	this.player.animations.play('idle', framerate ,true);
+  }
 
   //console.log(this.player.animations.currentAnim);
 };
@@ -124,6 +127,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   		else
   		{
   			this.enemy.animations.play('hurt');
+  			game.time.events.add(idletimer,this.ReturnToIdleEnemy,this);
   		}
 		
 	}
@@ -137,6 +141,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   		else
   		{
   			this.enemy.animations.play('hurt');
+  			game.time.events.add(idletimer,this.ReturnToIdleEnemy,this);
   		}
 	}
 
@@ -149,6 +154,8 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   		else
   		{
   			this.player.animations.play('hurt');
+  			game.time.events.add(idletimer,this.ReturnToIdle,this);
+
   		}	
   	}
 
@@ -161,6 +168,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   			else
   			{
   				this.player.animations.play('hurt');
+  				game.time.events.add(idletimer,this.ReturnToIdle,this);
   			}
 	}
 
@@ -248,12 +256,14 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 			console.log("high attack");
 			this.player.state = "high attack";
 			this.player.animations.play('high attack');
+			game.time.events.add(idletimer,this.ReturnToIdle,this);
 		}
 		else{
 			//LOW ATTACK
 			console.log("low attack");
 			this.player.state = "low attack";
 			this.player.animations.play('low attack');
+			game.time.events.add(idletimer,this.ReturnToIdle,this);
 		}
 	}
 	else{
@@ -262,12 +272,14 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 			console.log("high block");
 			this.player.state = "high block";
 			this.player.animations.play('high block');
+			game.time.events.add(idletimer,this.ReturnToIdle,this);
 		}
 		else{
 			//LOW BLOCK
 			console.log("low block");
 			this.player.state = "low block";
 			this.player.animations.play('low block');
+			game.time.events.add(idletimer,this.ReturnToIdle,this);
 		}
 	}
 };
@@ -406,3 +418,11 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     }
   }
 };
+
+fightState.prototype.ReturnToIdle = function (){
+	this.player.animations.play('idle', framerate ,true);
+}
+
+fightState.prototype.ReturnToIdleEnemy = function (){
+	this.enemy.animations.play('idle', framerate ,true);
+}
