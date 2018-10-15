@@ -41,6 +41,7 @@ fightState.prototype.create = function () {
   this.enemy.action = "null"; // stores the current action ie. blocking, attacking
   this.enemy.actionTimer = 0;
   this.enemy.actionSequence = [];
+  this.enemy.currentAttackDamge = false;
 
   let currentLevel =1;
 
@@ -101,7 +102,7 @@ fightState.prototype.update = function () {
   }
   this.PlayerInput();
   this.enemyBehavior(this.player,this.enemy);
-  
+
   this.playerhptext.text = "Your HP: " + this.player.health;
   this.enemyhptext.text = "Enemy HP: " + this.enemy.health;
 
@@ -118,7 +119,7 @@ fightState.prototype.update = function () {
 };
 
 fightState.prototype.checkForDamage = function (player,enemy) {
-	if(player.state === "high attack" && enemy.state !== "high block"){
+	if(player.state === "high attack" && enemy.action !== "high block"){
 		this.DamageCalc(player,enemy);
 		if(this.enemy.health <= 0)
   		{
@@ -129,10 +130,10 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   			this.enemy.animations.play('hurt');
   			game.time.events.add(idletimer,this.ReturnToIdleEnemy,this);
   		}
-		
+
 	}
 
-	else if(player.state === "low attack" && enemy.state !== "low block"){
+	else if(player.state === "low attack" && enemy.action !== "low block"){
 		this.DamageCalc(player,enemy);
 		if(this.enemy.health <= 0)
   		{
@@ -145,8 +146,9 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   		}
 	}
 
-	else if(enemy.state === "high attack" && player.state !== "high block"){
-		this.DamageCalc(enemy,player);
+	else if(enemy.action === "high attack" && player.state !== "high block"){
+		if(enemy.currentAttackDamge === false)this.DamageCalc(enemy,player);
+    enemy.currentAttackDamge = true;
 		if(this.player.health <= 0)
   		{
   			this.player.animations.play('death');
@@ -159,8 +161,9 @@ fightState.prototype.checkForDamage = function (player,enemy) {
   		}	
   	}
 
-	else if(enemy.state === "low attack" && player.state !== "low block"){
-		this.DamageCalc(enemy,player);
+	else if(enemy.action === "low attack" && player.state !== "low block"){
+    if(enemy.currentAttackDamge === false)this.DamageCalc(enemy,player);
+    enemy.currentAttackDamge = true;
 		if(this.player.health <= 0)
   			{
   				this.player.animations.play('death');
@@ -285,7 +288,7 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 };
 
 fightState.prototype.DamageCalc = function (attacker,defender){
-	defender.health -= game.math.max(0,(attacker.attack - defender.defense));
+	defender.health = game.math.max(0,(defender.health - attacker.attack));
 };
 
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
@@ -373,6 +376,10 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
         enemy.actionTimer = 0;
       }
       if (enemy.actionSequence[0]=="high attack"){
+        if (enemy.actionTimer <=1){
+          enemy.currentAttackDamge = false;
+          this.enemy.animations.play("high attack")
+        }
         if (enemy.actionTimer>15 && enemy.actionTimer < 45) {
           enemy.action = "high attack";
         }
@@ -381,6 +388,10 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
         }
       }
       else if (enemy.actionSequence[0]=="low attack"){
+        if (enemy.actionTimer <= 1){
+          enemy.currentAttackDamge = false;
+          this.enemy.animations.play("low attack")
+        }
         if (enemy.actionTimer>15 && enemy.actionTimer < 45) {
           enemy.action = "low attack";
         }
@@ -389,6 +400,9 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
         }
       }
       else if (enemy.actionSequence[0]=="high block"){
+        if (enemy.actionTimer <= 1){
+          this.enemy.animations.play("high block")
+        }
         if (enemy.actionTimer>15 && enemy.actionTimer < 45) {
           enemy.action = "high block";
         }
@@ -397,6 +411,9 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
         }
       }
       else if (enemy.actionSequence[0]=="low block"){
+        if (enemy.actionTimer <= 1) {
+          this.enemy.animations.play("low block")
+        }
         if (enemy.actionTimer>15 && enemy.actionTimer < 45) {
           enemy.action = "low block";
         }
@@ -408,6 +425,7 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     else{
       enemy.state = "cooling down";
       enemy.cooldown = 30 + Math.random()*60;
+      this.enemy.animations.play("idle")
     }
 
   }
