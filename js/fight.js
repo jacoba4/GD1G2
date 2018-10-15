@@ -1,15 +1,33 @@
 let fightState = function(){};
 
+fightState.prototype.preload = function(){
+	 game.load.audio('fightmusic', ['assets/music/CombatSong.wav']);
+	 game.load.spritesheet("playeridle", "assets/sprites/elephant1/elephantIdle_sheet.png",1150,825);
+}
+
 fightState.prototype.create = function () {
+  this.music = game.add.audio('fightmusic');
+  this.music.loop = true;
+  this.music.play();
+  this.music.volume = .1;
+
   game.add.sprite(0,0,"fight"); // load the background
-  this.player = game.add.sprite(160, 300, "player"); // 845 X 560 elephant size
-  this.player.state = "low block"
-  this.enemy = game.add.sprite(1430, 300, "enemy");
+  this.player = game.add.sprite(160, 300, "playeridle"); // 845 X 560 elephant size
+  this.player.animations.add('idle');
+  this.player.animations.play('idle', 10, true);
+  this.player.state = "ready to act";
+
+  this.enemy = game.add.sprite(2200, 300, "playeridle");
+  this.enemy.animations.add('idle');
+  this.enemy.animations.play('idle', 10, true);
+  this.enemy.scale.x *= -1;
   this.enemy.state = "ready to act"; // stores the current state of the enemy
   this.enemy.action = "nul"; // stores the current action ie. blocking, attacking
   this.enemy.actionTimer = 0;
   this.enemy.actionSequence = [];
+
   let currentLevel =1;
+
   if (currentLevel===1){ // assign enemy stats per level
     this.enemy.attack = 1;
     this.enemy.defense = 1;
@@ -55,17 +73,22 @@ fightState.prototype.create = function () {
   this.player.speed = 60;
   this.player.health = 10;
 
-  this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "32px", fill: "#000000"});
-  this.enemyhptext = game.add.text(16, 64, "HP: ", {fontSize: "32px", fill: "#000000"});
+  this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
+  this.enemyhptext = game.add.text(1550, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
 
 };
 
 fightState.prototype.update = function () {
   //fighting and stuff
-  this.enemyBehavior(this.player,this.enemy);
+  if(this.player.actionframe === 0){
+  	this.player.state = "idle";
+  }
   this.PlayerInput();
-  this.playerhptext.text = "Player HP: " + this.player.health;
+  this.enemyBehavior(this.player,this.enemy);
+  
+  this.playerhptext.text = "Your HP: " + this.player.health;
   this.enemyhptext.text = "Enemy HP: " + this.enemy.health;
+
   if(this.player.actionframe < this.player.speed){
   	this.player.actionframe++;
   }
@@ -74,7 +97,23 @@ fightState.prototype.update = function () {
 };
 
 fightState.prototype.checkForDamage = function (player,enemy) {
+	if(player.state === "high attack" && enemy.state !== "high block"){
+		this.DamageCalc(player,enemy);
+	}
 
+	if(player.state === "low attack" && enemy.state !== "low block"){
+		this.DamageCalc(player,enemy);
+	}
+
+	if(enemy.state === "high attack" && player.state !== "high block"){
+		this.DamageCalc(enemy,player);
+	}
+
+	if(enemy.state === "low attack" && player.state !== "low block"){
+		this.DamageCalc(enemy,player);
+	}
+
+	this.player.state = "idle";
 };
 
 
@@ -174,6 +213,7 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 			//LOW BLOCK
 			console.log("low block");
 			this.player.state = "low block";
+			this.player.animations.play("low block",10);
 		}
 	}
 };
