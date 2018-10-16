@@ -19,6 +19,9 @@ preloadSate.prototype.preload = function () {
   game.load.spritesheet("playeridle", "assets/sprites/Elephants/elephant1_all.png",1150,825);
   game.load.spritesheet("enemy1idle", "assets/sprites/Elephants/elephant1_all.png",1150,825);
   game.load.spritesheet("enemy2idle", "assets/sprites/Elephants/elephant3_all.png",1150,825);
+  game.load.bitmapFont('ancientFont', 'assets/fonts/ancientFont.png', 'assets/fonts/ancientFont.fnt');
+  game.load.image('cloud', 'assets/cloud-overlays-png.png');
+  game.load.audio('menuMusic', 'assets/music/MenuMusic.wav');
 };
 preloadSate.prototype.create = function () {
   game.state.start("MainMenu");
