@@ -17,8 +17,10 @@ preloadSate.prototype.preload = function () {
   game.load.audio('losemusic', ['assets/sounds/DefeatSound.wav']);
   game.load.audio('winmusic', ['assets/sounds/VictorySound.wav']);
   game.load.spritesheet("playeridle", "assets/sprites/Elephants/elephant1_all.png",1150,825);
-  game.load.spritesheet("enemy1idle", "assets/sprites/Elephants/elephant1_all.png",1150,825);
+  game.load.spritesheet("enemy1idle", "assets/sprites/Elephants/elephant2_all.png",1150,825);
   game.load.spritesheet("enemy2idle", "assets/sprites/Elephants/elephant3_all.png",1150,825);
+  game.load.spritesheet("enemy3idle", "assets/sprites/Elephants/elephant4_all.png",1150,825);
+  game.load.spritesheet("enemy4idle", "assets/sprites/Elephants/elephant5_all.png",1150,825);
   game.load.bitmapFont('ancientFont', 'assets/fonts/ancientFont.png', 'assets/fonts/ancientFont.fnt');
   game.load.image('cloud', 'assets/cloud-overlays-png.png');
   game.load.audio('menuMusic', 'assets/music/MenuMusic.wav');
