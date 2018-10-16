@@ -7,6 +7,7 @@ preloadSate.prototype.preload = function () {
   game.load.image("victory","assets/backgrounds/victory_bg.png");
   game.load.image("playbutton","assets/playbutton.png");
   game.load.bitmapFont('ancientFont', 'assets/fonts/ancientFont.png', 'assets/fonts/ancientFont.fnt');
+  game.load.image('cloud', 'assets/cloud-overlays-png.png');
   game.load.audio('menuMusic', 'assets/music/MenuMusic.wav');
 };
 
