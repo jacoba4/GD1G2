@@ -1,15 +1,25 @@
 let fightState = function(){};
 
+/*
+fightState.prototype.init = function(level){
+	console.log(level);
+	this.currentLevel = level;
+	console.log(this.currentLevel);
+};*/
+
 fightState.prototype.preload = function(){
 	 game.load.audio('fightmusic', ['assets/music/CombatSong.wav']);
+	 game.load.audio('losemusic', ['assets/sounds/DefeatSound.wav']);
+	 game.load.audio('winmusic', ['assets/sounds/VictorySound.wav']);
 	 game.load.spritesheet("playeridle", "assets/sprites/elephant1/elephantALL.png",1150,825);
-}
+};
 
-fightState.prototype.create = function () {
+fightState.prototype.create = function (l) {
   this.music = game.add.audio('fightmusic');
   this.music.loop = true;
   this.music.play();
   this.music.volume = .1;
+
 
   framerate = 6;
   idletimer = 1000;
@@ -42,31 +52,32 @@ fightState.prototype.create = function () {
   this.enemy.actionTimer = 0;
   this.enemy.actionSequence = [];
   this.enemy.currentAttackDamge = false;
+  this.enemy.active = true;
 
-  let currentLevel =1;
+  console.log(currentLevel);
 
-  if (currentLevel===1){ // assign enemy stats per level
+  if (currentLevel==1){ // assign enemy stats per level
     this.enemy.attack = 1;
     this.enemy.defense = 1;
     this.enemy.speed = 1;
     this.enemy.health = 10;
     this.enemy.skill = 1;
   }
-  else if (currentLevel===2){
+  else if (currentLevel==2){
     this.enemy.attack = 1;
     this.enemy.defense = 1;
     this.enemy.speed = 1;
     this.enemy.health = 10;
     this.enemy.skill = 2;
   }
-  else if (currentLevel===3){
+  else if (currentLevel==3){
     this.enemy.attack = 1;
     this.enemy.defense = 1;
     this.enemy.speed = 1;
     this.enemy.health = 10;
     this.enemy.skill = 3;
   }
-  else if (currentLevel===4){
+  else if (currentLevel==4){
     this.enemy.attack = 1;
     this.enemy.defense = 1;
     this.enemy.speed = 1;
@@ -85,9 +96,9 @@ fightState.prototype.create = function () {
   this.player.actionTimer = 0;
 
 
-  this.player.attack = 5;
-  this.player.defense = 1;
-  this.player.speed = 5;
+  this.player.attack = playeratt;
+  this.player.defense = playerdef;
+  this.player.speed = playerhealth;
   this.player.health = 10;
 
   this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
@@ -101,7 +112,10 @@ fightState.prototype.update = function () {
   	this.player.state = "idle";
   }
   this.PlayerInput();
-  this.enemyBehavior(this.player,this.enemy);
+
+  if(this.enemy.active){
+  	this.enemyBehavior(this.player,this.enemy);
+  }
 
   this.playerhptext.text = "Your HP: " + this.player.health;
   this.enemyhptext.text = "Enemy HP: " + this.enemy.health;
@@ -110,7 +124,9 @@ fightState.prototype.update = function () {
   	this.player.actionframe++;
   }
   //this.updatePlayerAction(this.player);
-  this.checkForDamage(this.player, this.enemy);
+  if(this.enemy.active){
+  	this.checkForDamage(this.player, this.enemy);
+  }
   if(this.player.animations.isPlaying == false){
   	this.player.animations.play('idle', framerate ,true);
   }
@@ -124,6 +140,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
 		if(this.enemy.health <= 0)
   		{
   			this.enemy.animations.play('death');
+  			this.Win();
   		}
   		else
   		{
@@ -138,6 +155,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
 		if(this.enemy.health <= 0)
   		{
   			this.enemy.animations.play('death');
+  			this.Win();
   		}
   		else
   		{
@@ -152,6 +170,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
 		if(this.player.health <= 0)
   		{
   			this.player.animations.play('death');
+  			this.Lose();
   		}
   		else
   		{
@@ -167,6 +186,7 @@ fightState.prototype.checkForDamage = function (player,enemy) {
 		if(this.player.health <= 0)
   			{
   				this.player.animations.play('death');
+  				this.Lose();
   			}
   			else
   			{
@@ -439,8 +459,48 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
 
 fightState.prototype.ReturnToIdle = function (){
 	this.player.animations.play('idle', framerate ,true);
-}
+};
 
 fightState.prototype.ReturnToIdleEnemy = function (){
 	this.enemy.animations.play('idle', framerate ,true);
+};
+
+fightState.prototype.Lose = function(){
+	this.enemy.active = false;
+	this.music.stop();
+	this.music = game.add.audio("losemusic");
+	this.music.play();
+	game.time.events.add(3000,this.GoToLose,this);
+	
+};
+
+fightState.prototype.GoToLose = function(){
+	game.state.start("Loss");
+};
+
+fightState.prototype.Win = function(){
+	this.enemy.active = false;
+	this.music.stop();
+	this.music = game.add.audio("winmusic");
+	this.music.play();
+	game.time.events.add(3000,this.NextLevel,this);
+};
+
+fightState.prototype.NextLevel = function(){
+	if(currentLevel === 1){
+		currentLevel++;
+		game.state.start("Story3");
+	}
+	else if(currentLevel === 2){
+		currentLevel++;
+		game.state.start("Story4");
+	}
+	else if(currentLevel === 3){
+		currentLevel++;
+		game.state.start("Story5");
+	}
+	else if(currentLevel === 4){
+		currentLevel++;
+		game.state.start("StoryVictory");
+	}
 }

@@ -12,5 +12,5 @@ mainMenuState.prototype.update = function () {
 };
 
 function ButtonClick(){
-	game.state.start("Fight");
+	game.state.start("Story1",1);
 }
