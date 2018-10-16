@@ -96,9 +96,9 @@ fightState.prototype.create = function (l) {
   this.player.actionTimer = 0;
 
 
-  this.player.attack = 5;
-  this.player.defense = 1;
-  this.player.speed = 5;
+  this.player.attack = playeratt;
+  this.player.defense = playerdef;
+  this.player.speed = playerhealth;
   this.player.health = 10;
 
   this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
