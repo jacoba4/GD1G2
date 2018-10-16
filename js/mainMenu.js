@@ -29,7 +29,11 @@ mainMenuState.prototype.update = function () {
   tapText = 'tap to begin';
   if(game.input.activePointer.leftButton.isDown){
 
+    justclicked = true;
 
+  }
+  if(justclicked){
+    game.state.start('story1', true, false);
   }
 
 };
