@@ -295,13 +295,13 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 			//HIGH BLOCK
 			console.log("high block");
 			this.player.animations.play('high block');
-      game.time.events.add(750,this.setPlayerState,this);
+      game.time.events.add(0,this.setPlayerState,this);
 		}
 		else{
 			//LOW BLOCK
 			console.log("low block");
 			this.player.animations.play('low block');
-			game.time.events.add(750,this.setPlayerState,this);
+			game.time.events.add(0,this.setPlayerState,this);
 		}
 	}
 };
@@ -322,13 +322,13 @@ fightState.prototype.setPlayerState = function(state){
   if(this.player.animations.currentAnim.name === "high block")
   {
     this.player.state = "high block";
-    game.time.events.add(idletimer,this.ReturnToIdle,this);
+    game.time.events.add(1000,this.ReturnToIdle,this);
   }
 
   if(this.player.animations.currentAnim.name === "low block")
   {
     this.player.state = "low block";
-    game.time.events.add(idletimer,this.ReturnToIdle,this);
+    game.time.events.add(1000,this.ReturnToIdle,this);
   }
 };
 
