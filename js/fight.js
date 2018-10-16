@@ -11,7 +11,7 @@ fightState.prototype.preload = function(){
 	 game.load.audio('fightmusic', ['assets/music/CombatSong.wav']);
 	 game.load.audio('losemusic', ['assets/sounds/DefeatSound.wav']);
 	 game.load.audio('winmusic', ['assets/sounds/VictorySound.wav']);
-	 game.load.spritesheet("playeridle", "assets/sprites/elephant1/elephantALL.png",1150,825);
+	 game.load.spritesheet("playeridle", "assets/sprites/elephantOLD/elephantALL.png",1150,825);
 };
 
 fightState.prototype.create = function (l) {
@@ -22,7 +22,7 @@ fightState.prototype.create = function (l) {
 
 
   framerate = 6;
-  idletimer = 1000;
+  idletimer = 250;
   game.add.sprite(0,0,"fight"); // load the background
   this.player = game.add.sprite(160, 300, "playeridle"); // 845 X 560 elephant size
   this.player.animations.add('idle', [3,4,5,9,10,11],framerate);
@@ -108,6 +108,9 @@ fightState.prototype.create = function (l) {
 
 fightState.prototype.update = function () {
   //fighting and stuff
+  if(this.player.hitcounting){
+    this.player.hitcount++;
+  }
   if(this.player.actionframe === 0){
   	this.player.state = "idle";
   }
@@ -277,34 +280,56 @@ fightState.prototype.Swipe = function (swipestartx,swipestarty,swipeendx,swipeen
 		if(swipedtop){
 			//HIGH ATTACK
 			console.log("high attack");
-			this.player.state = "high attack";
 			this.player.animations.play('high attack');
-			game.time.events.add(idletimer,this.ReturnToIdle,this);
+			game.time.events.add(750,this.setPlayerState,this);
 		}
 		else{
 			//LOW ATTACK
 			console.log("low attack");
-			this.player.state = "low attack";
 			this.player.animations.play('low attack');
-			game.time.events.add(idletimer,this.ReturnToIdle,this);
+      game.time.events.add(750,this.setPlayerState,this);
 		}
 	}
 	else{
 		if(swipedtop){
 			//HIGH BLOCK
 			console.log("high block");
-			this.player.state = "high block";
 			this.player.animations.play('high block');
-			game.time.events.add(idletimer,this.ReturnToIdle,this);
+      game.time.events.add(750,this.setPlayerState,this);
 		}
 		else{
 			//LOW BLOCK
 			console.log("low block");
-			this.player.state = "low block";
 			this.player.animations.play('low block');
-			game.time.events.add(idletimer,this.ReturnToIdle,this);
+			game.time.events.add(750,this.setPlayerState,this);
 		}
 	}
+};
+
+fightState.prototype.setPlayerState = function(state){
+  if(this.player.animations.currentAnim.name === "high attack")
+  {
+    this.player.state = "high attack";
+    game.time.events.add(idletimer,this.ReturnToIdle,this);
+  }
+
+  if(this.player.animations.currentAnim.name === "low attack")
+  {
+    this.player.state = "low attack";
+    game.time.events.add(idletimer,this.ReturnToIdle,this);
+  }
+
+  if(this.player.animations.currentAnim.name === "high block")
+  {
+    this.player.state = "high block";
+    game.time.events.add(idletimer,this.ReturnToIdle,this);
+  }
+
+  if(this.player.animations.currentAnim.name === "low block")
+  {
+    this.player.state = "low block";
+    game.time.events.add(idletimer,this.ReturnToIdle,this);
+  }
 };
 
 fightState.prototype.DamageCalc = function (attacker,defender){
