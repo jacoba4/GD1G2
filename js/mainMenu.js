@@ -33,7 +33,8 @@ mainMenuState.prototype.update = function () {
 
   }
   if(justclicked){
-    game.state.start('story1', true, false);
+    justclicked = false;
+    game.state.start('story1');
   }
 
 };
