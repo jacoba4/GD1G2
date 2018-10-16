@@ -27,6 +27,13 @@ mainMenuState.prototype.update = function () {
   //display animations if we want them / check for clicks and stuff
   ancientText.text = 'The Kingphant of Anuradhapura';
   tapText = 'tap to begin';
+  if(game.input.activePointer.leftButton.isDown){
+    justclicked = true;
+  }
+  if(justclicked){
+    justclicked = false;
+    game.state.start('story1', true, false);
+  }
 
 };
 
