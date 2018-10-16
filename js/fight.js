@@ -8,10 +8,7 @@ fightState.prototype.init = function(level){
 };*/
 
 fightState.prototype.preload = function(){
-	 game.load.audio('fightmusic', ['assets/music/CombatSong.wav']);
-	 game.load.audio('losemusic', ['assets/sounds/DefeatSound.wav']);
-	 game.load.audio('winmusic', ['assets/sounds/VictorySound.wav']);
-	 game.load.spritesheet("playeridle", "assets/sprites/elephant1/elephantALL.png",1150,825);
+
 };
 
 fightState.prototype.create = function (l) {
@@ -21,24 +18,19 @@ fightState.prototype.create = function (l) {
   this.music.volume = .1;
 
 
+  let currentLevel =1;
+
   framerate = 6;
   idletimer = 1000;
   game.add.sprite(0,0,"fight"); // load the background
   this.player = game.add.sprite(160, 300, "playeridle"); // 845 X 560 elephant size
-	this.enemy = game.add.sprite(2200, 300, "playeridle");
+  if(currentLevel === 1)this.enemy = game.add.sprite(2200, 300, "enemy1idle");
+  else if(currentLevel === 2)this.enemy = game.add.sprite(2200, 300, "enemy2idle");
+  else if(currentLevel === 3)this.enemy = game.add.sprite(2200, 300, "enemy3idle");
+  else this.enemy = game.add.sprite(2200, 300, "enemy4idle");
 
   this.player.animations.play('idle', framerate ,true);
   this.player.state = "ready to act";
-
-  this.enemy.animations.play('idle', framerate, true);
-  this.enemy.scale.x *= -1;
-  this.enemy.state = "dead"; // stores the current state of the enemy
-  this.enemy.action = "null"; // stores the current action ie. blocking, attacking
-  this.enemy.actionTimer = 0;
-  this.enemy.actionSequence = [];
-  this.enemy.currentAttackDamge = false;
-  this.enemy.active = true;
-
 
 	game.input.mouse.capture = true;
   this.player.leftdown = false;
@@ -59,8 +51,6 @@ fightState.prototype.create = function (l) {
   this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
   this.enemyhptext = game.add.text(1550, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
 
-
-  let currentLevel =1;
 
   if (currentLevel==1){ // assign enemy stats per level
     this.enemy.attack = 1;
@@ -91,21 +81,29 @@ fightState.prototype.create = function (l) {
     this.enemy.skill = 4;
   }
 
-	this.enemy.animations.add('idle', [3,4,5,9,10,11],framerate);
-	this.enemy.animations.add('high attack',[30,31,32,32,36,36,37,38],framerate*this.enemy.speed);
-	this.enemy.animations.add('high block', [27,27,27,28,29,29,33,33],framerate*this.enemy.speed);
-	this.enemy.animations.add('low attack', [18,18,19,20,24,25,25,26],framerate*this.enemy.speed);
-	this.enemy.animations.add('low block',  [ 0, 1, 1, 2, 2, 6, 6, 7],framerate*this.enemy.speed);
-	this.enemy.animations.add('hurt', [12,13,14],framerate*this.enemy.speed);
-	this.enemy.animations.add('death', [15,16,17,21,22],framerate);
+  this.enemy.scale.x *= -1;
+  this.enemy.state = "dead"; // stores the current state of the enemy
+  this.enemy.action = "null"; // stores the current action ie. blocking, attacking
+  this.enemy.actionTimer = 0;
+  this.enemy.actionSequence = [];
+  this.enemy.currentAttackDamge = false;
+  this.enemy.active = true;
 
-	this.player.animations.add('idle', [3,4,5,9,10,11],framerate);
-  this.player.animations.add('high attack', [30,31,32,32,36,36,37,38],framerate*this.player.speed);
-  this.player.animations.add('high block',  [27,27,27,28,29,29,33,33],framerate*this.player.speed);
-  this.player.animations.add('low attack',  [18,18,19,20,24,25,25,26],framerate*this.player.speed);
-  this.player.animations.add('low block',   [ 0, 1, 1, 2, 2, 6, 6, 7],framerate*this.player.speed);
-  this.player.animations.add('hurt', [12,13,14],framerate*this.player.speed);
-  this.player.animations.add('death', [15,16,17,21,22],framerate);
+	this.enemy.animations.add('idle', [24,25,26,30,31,32],framerate);
+	this.enemy.animations.add('high attack',[3,4,5,9,10,11],framerate*this.enemy.speed);
+	this.enemy.animations.add('high block', [12,13,14,18],framerate*this.enemy.speed);
+	this.enemy.animations.add('low attack', [27,28,29,33,34,35],framerate*this.enemy.speed);
+	this.enemy.animations.add('low block',  [ 36, 37, 38, 42, 43],framerate*this.enemy.speed);
+	this.enemy.animations.add('hurt', [15,16,17],framerate*this.enemy.speed);
+	this.enemy.animations.add('death', [0,1,2,6,7],framerate);
+
+	this.player.animations.add('idle', [24,25,26,30,31,32],framerate);
+  this.player.animations.add('high attack', [3,4,5,9,10,11],framerate*this.player.speed);
+  this.player.animations.add('high block',  [12,13,14,18],framerate*this.player.speed);
+  this.player.animations.add('low attack', [27,28,29,33,34,35],framerate*this.player.speed);
+  this.player.animations.add('low block',   [ 36, 37, 38, 42, 43],framerate*this.player.speed);
+  this.player.animations.add('hurt', [15,16,17],framerate*this.player.speed);
+  this.player.animations.add('death', [0,1,2,6,7],framerate);
 
 
 
@@ -490,7 +488,7 @@ fightState.prototype.Lose = function(){
 	this.music = game.add.audio("losemusic");
 	this.music.play();
 	game.time.events.add(3000,this.GoToLose,this);
-	
+
 };
 
 fightState.prototype.GoToLose = function(){

@@ -13,8 +13,13 @@ preloadSate.prototype.preload = function () {
   game.load.image("story4", "assets/storyScreens/storyScreen4.png")
   game.load.image("story5", "assets/storyScreens/storyScreen5.png")
   game.load.image("Victory", "assets/storyScreens/storyVictory.png")
+  game.load.audio('fightmusic', ['assets/music/CombatSong.wav']);
+  game.load.audio('losemusic', ['assets/sounds/DefeatSound.wav']);
+  game.load.audio('winmusic', ['assets/sounds/VictorySound.wav']);
+  game.load.spritesheet("playeridle", "assets/sprites/Elephants/elephant1_all.png",1150,825);
+  game.load.spritesheet("enemy1idle", "assets/sprites/Elephants/elephant1_all.png",1150,825);
+  game.load.spritesheet("enemy2idle", "assets/sprites/Elephants/elephant3_all.png",1150,825);
 };
-
 preloadSate.prototype.create = function () {
   game.state.start("MainMenu");
 };
