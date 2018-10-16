@@ -9,6 +9,13 @@
 	<script type ="text/javascript" src="js/pauseMenu.js"></script>
 	<script type ="text/javascript" src="js/fight.js"></script>
 	<script type ="text/javascript" src="js/shop.js"></script>
+	<script type ="text/javascript" src="js/loss.js"></script>
+	<script type ="text/javascript" src="js/story1.js"></script>
+	<script type ="text/javascript" src="js/story2.js"></script>
+	<script type ="text/javascript" src="js/story3.js"></script>
+	<script type ="text/javascript" src="js/story4.js"></script>
+	<script type ="text/javascript" src="js/story5.js"></script>
+	<script type ="text/javascript" src="js/storyVictory.js"></script>
   <style type="text/css">
       body {
           margin: 0;
@@ -18,11 +25,21 @@
 <body>
 	<script type="text/javascript">
 		let game = new Phaser.Game(2436, 1125, Phaser.AUTO);
+
+		let currentLevel = 1;
+		let justclicked = false;
 		game.state.add("Preload", preloadSate);
 		game.state.add("MainMenu", mainMenuState);
 		game.state.add("PauseMenu", pauseMenu);
 		game.state.add("Fight", fightState);
 		game.state.add("Shop", shopState);
+		game.state.add("Loss", lossState);
+		game.state.add("Story1", story1State);
+		game.state.add("Story2", story2State);
+		game.state.add("Story3", story3State);
+		game.state.add("Story4", story4State);
+		game.state.add("Story5", story5State);
+		game.state.add("StoryVictory", VictoryState);
 		game.state.start("Preload");
 	</script>
 
