@@ -5,7 +5,7 @@ preloadSate.prototype.preload = function () {
   game.load.image("shop","assets/backgrounds/shop.png");
   game.load.image("fight","assets/backgrounds/fight_bg.png");
   game.load.image("victory","assets/backgrounds/victory_bg.png");
-  game.load.image("playbutton","assets/playbutton.png");
+  //game.load.image("playbutton","assets/playbutton.png");
   game.load.image("loss", "assets/storyScreens/storyDefeat.png");
   game.load.image("story1", "assets/storyScreens/storyScreen1.png")
   game.load.image("story2", "assets/storyScreens/storyScreen2.png")
@@ -24,5 +24,5 @@ preloadSate.prototype.preload = function () {
   game.load.audio('menuMusic', 'assets/music/MenuMusic.wav');
 };
 preloadSate.prototype.create = function () {
-  game.state.start("MainMenu");
+  game.state.start("Fight");
 };

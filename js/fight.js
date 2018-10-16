@@ -24,10 +24,10 @@ fightState.prototype.create = function (l) {
   idletimer = 1000;
   game.add.sprite(0,0,"fight"); // load the background
   this.player = game.add.sprite(160, 300, "playeridle"); // 845 X 560 elephant size
-  if(currentLevel === 1)this.enemy = game.add.sprite(2200, 300, "enemy1idle");
-  else if(currentLevel === 2)this.enemy = game.add.sprite(2200, 300, "enemy2idle");
-  else if(currentLevel === 3)this.enemy = game.add.sprite(2200, 300, "enemy3idle");
-  else this.enemy = game.add.sprite(2200, 300, "enemy4idle");
+  if(currentLevel === 1)this.enemy = game.add.sprite(2200, 300, "enemy2idle");
+  else if(currentLevel === 2)this.enemy = game.add.sprite(2200, 300, "enemy3idle");
+  else if(currentLevel === 3)this.enemy = game.add.sprite(2200, 300, "enemy4idle");
+  else this.enemy = game.add.sprite(2200, 300, "enemy5idle");
 
   this.player.animations.play('idle', framerate ,true);
   this.player.state = "ready to act";
@@ -104,8 +104,6 @@ fightState.prototype.create = function (l) {
   this.player.animations.add('low block',   [ 36, 37, 38, 42, 43],framerate*this.player.speed);
   this.player.animations.add('hurt', [15,16,17],framerate*this.player.speed);
   this.player.animations.add('death', [0,1,2,6,7],framerate);
-
-
 
 };
 
