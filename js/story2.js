@@ -11,6 +11,6 @@ story2State.prototype.update = function(){
 
 	if(justclicked){
 		justclicked = false;
-		game.state.start("Fight",true,false,1);
+		game.state.start("Fight",true,false);
 	}
 }

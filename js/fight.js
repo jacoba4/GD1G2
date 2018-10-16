@@ -57,7 +57,7 @@ fightState.prototype.create = function (l) {
   console.log(currentLevel);
 
   if (currentLevel==1){ // assign enemy stats per level
-    this.enemy.attack = 5;
+    this.enemy.attack = 1;
     this.enemy.defense = 1;
     this.enemy.speed = 1;
     this.enemy.health = 10;

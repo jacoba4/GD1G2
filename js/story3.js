@@ -11,6 +11,6 @@ story3State.prototype.update = function(){
 
 	if(justclicked){
 		justclicked = false;
-		game.state.start("Fight",true,false,2);
+		game.state.start("Shop");
 	}
 }

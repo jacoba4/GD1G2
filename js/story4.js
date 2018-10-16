@@ -6,6 +6,6 @@ story4State.prototype.create = function(){
 
 story4State.prototype.update = function(){
 	if(game.input.activePointer.leftButton.isDown){
-		game.state.start("Fight",true,false,3);
+		game.state.start("Shop");
 	}
 }
