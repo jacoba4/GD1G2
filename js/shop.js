@@ -66,7 +66,7 @@ function chose_tooth () {
 function chose_shield () {
 
   shield_.alpha = 1;
-  sacred_t_.alpha = 0.7;
+  sacred_t.alpha = 0.7;
   spear_.alpha = 0.7;
   if(tooth_used == true){
     sacred_t.alpha = 0.3;
@@ -143,13 +143,5 @@ shopState.prototype.update = function () {
 };
 
 shopState.prototype.NextLevel = function(){
-	if(currentLevel === 2){
 		game.state.start("Fight",true,false);
-	}
-	else if(currentLevel === 3){
-		game.state.start("Fight",true,false);
-	}
-	else if(currentLevel === 4){
-		game.state.start("Fight",true,false);
-	}
 }

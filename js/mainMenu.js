@@ -66,7 +66,7 @@ mainMenuState.prototype.update = function () {
   if(justclicked){
 
     justclicked = false;
-    game.state.start('Story1');
+    game.state.start('Shop');
 
   }
 };
