@@ -31,16 +31,17 @@ mainMenuState.prototype.update = function () {
   if(game.input.activePointer.leftButton.isDown){
 
     justclicked = true;
+    game_starting = true;
 
   }
-  if(justclicked){
-    justclicked = false;
+  if(game_starting == true){
     menu_music.pause();
+  }
+  if(justclicked){
+
+    justclicked = false;
     game.state.start('Story1');
+
   }
 
 };
-
-function ButtonClick(){
-	//game.state.start("Fight");
-}
