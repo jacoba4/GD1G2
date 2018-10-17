@@ -4,8 +4,8 @@ let ancientText;
 let style;
 let tapText;
 let menu_music;
-let cloud;
-let pink_cloud;
+//let cloud;
+//let pink_cloud;
 let sanddust1;
 let sd2;
 let sd3;
@@ -42,15 +42,15 @@ mainMenuState.prototype.create = function () {
   tapText = game.add.text(1050, 970, 'tap to begin', style); //font for tap to begin
   tapText.alpha = 0;
   game.add.tween(tapText).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true, 0, 2000, true);
-  game.time.events.repeat(Phaser.Timer.SECOND * 5, 20, createClouds, this);
+  game.time.events.repeat(Phaser.Timer.SECOND * 5, 20, this.createClouds, this);
 
 
 }
 mainMenuState.prototype.createClouds = function () {
 
-  cloud = game.add.sprite(0, 0, 'cloud');
+  let cloud = game.add.sprite(0, 0, 'cloud');
   cloud.scale.setTo(0.8,0.5);
-  pink_cloud = game.add.sprite(300, 40, 'pinkcloud');
+  let pink_cloud = game.add.sprite(300, 40, 'pinkcloud');
   cloud.alpha = 0.4;
   pink_cloud.alpha = 0.3;
   cloud.body.velocity.x = 20;
