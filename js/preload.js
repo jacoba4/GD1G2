@@ -17,11 +17,13 @@ preloadSate.prototype.preload = function () {
   game.load.image('pinkcloud', 'assets/sprites/pink-cloud-png-2.png');
   game.load.image('sand_dust', 'assets/sprites/dusty.png');
   game.load.image('sacred_tooth', 'assets/sprites/relics/sacredTooth.png');
+  game.load.image('shield', 'assets/sprites/relics/shield.png');
+  game.load.image('spear', 'assets/sprites/relics/spear.png');
   game.load.audio('fightmusic', 'assets/music/CombatSong.wav')
 };
 
 preloadSate.prototype.create = function () {
-  game.state.start("MainMenu");
-//  game.state.start('Shop');
+  //game.state.start("MainMenu");
+  game.state.start('Shop');
 
 };
