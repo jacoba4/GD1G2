@@ -9,6 +9,7 @@ let c1;
 let tween_cloud;
 let pink_cloud;
 let p1;
+let sand1;
 
 mainMenuState.prototype.create = function () {
   //add menu buttons, animations, and title music
@@ -33,6 +34,7 @@ mainMenuState.prototype.create = function () {
   pink_cloud.body.velocity.x = 20;
   c1.body.velocity.x = 20;
   p1.body.velocity.x = 20;
+  sand1 = game.add.sprite(50, 1100, 'sand_wave');
   //tween_cloud = game.add.tween(cloud);
   //tween_cloud.repeat(10, 4000);
   //editing transparency and scale

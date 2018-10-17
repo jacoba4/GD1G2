@@ -16,6 +16,7 @@ preloadSate.prototype.preload = function () {
   game.load.image('story5', 'assets/storyScreens/storyScreen5.png');
   game.load.image('pinkcloud', 'assets/sprites/pink-cloud-png-2.png');
   game.load.image('sand_dust', 'assets/sprites/dusty.png');
+  game.load.image('sand_wave', 'assets/sprites/sandy.png');
   game.load.image('sacred_tooth', 'assets/sprites/relics/sacredTooth.png');
   game.load.image('shield', 'assets/sprites/relics/shield.png');
   game.load.image('spear', 'assets/sprites/relics/spear.png');
