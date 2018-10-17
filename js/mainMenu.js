@@ -11,6 +11,7 @@ mainMenuState.prototype.create = function () {
 //  game.add.sprite(10, 10, 'cloud');
   game.add.sprite(0,0,"title");
   game.add.sprite(20, 20, 'cloud');
+  menu_music = game.sound.play('menuMusic');
   ancientText = game.add.bitmapText(300, 150, 'ancientFont', 'The Kingphant of Anuradhapura', 75); //load the title
   ancientText.alpha = 1;
   game.add.tween(ancientText).to( { alpha: 2 }, 5000, Phaser.Easing.Linear.None, true);
@@ -19,7 +20,7 @@ mainMenuState.prototype.create = function () {
   tapText.alpha = 0;
   game.add.tween(tapText).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true, 0, 2000, true);
 
-  menu_music = game.sound.play('menuMusic');
+
 
 };
 
@@ -28,15 +29,19 @@ mainMenuState.prototype.update = function () {
   ancientText.text = 'The Kingphant of Anuradhapura';
   tapText = 'tap to begin';
   if(game.input.activePointer.leftButton.isDown){
+
     justclicked = true;
+    game_starting = true;
+
+  }
+  if(game_starting == true){
+    menu_music.pause();
   }
   if(justclicked){
+
     justclicked = false;
-    game.state.start('story1', true, false);
+    game.state.start('Story1');
+
   }
 
 };
-
-function ButtonClick(){
-	//game.state.start("Fight");
-}
