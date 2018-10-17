@@ -11,7 +11,7 @@ mainMenuState.prototype.create = function () {
   //add menu buttons, animations, and title music
   game.add.sprite(0,0,"title");
   cloud = game.add.sprite(0, 0, 'cloud'); //first cloud instance
-  pink_cloud = game.add.sprite(5, 20, 'pinkCloud');
+  pink_cloud = game.add.sprite(5, 20, 'pinkcloud');
   //editing transparency and scale
   cloud.scale.setTo(0.8,0.5);
   cloud.alpha = 0.4;

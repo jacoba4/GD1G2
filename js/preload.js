@@ -14,7 +14,7 @@ preloadSate.prototype.preload = function () {
   game.load.image('story3', 'assets/storyScreens/storyScreen3.png');
   game.load.image('story4', 'assets/storyScreens/storyScreen4.png');
   game.load.image('story5', 'assets/storyScreens/storyScreen5.png');
-  game.load.image('pinkcloud', 'assets/pink.jpg');
+  game.load.image('pinkcloud', 'assets/sprites/pink.jpg');
   game.load.audio('fightmusic', 'assets/music/CombatSong.wav')
 };
 
