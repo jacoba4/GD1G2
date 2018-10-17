@@ -34,8 +34,8 @@ fightState.prototype.create = function (l) {
 
   if(spear_used)this.player.attack = 2;
   else this.player.attack = 1;
-  if(shield_used)this.player.defense = 2;
-  else this.player.defense = 1;
+  if(shield_used)this.player.defense = 1;
+  else this.player.defense = 0;
   if(tooth_used)this.player.health = 15;
   else this.player.health = 10;
   this.player.speed = 3;
@@ -47,33 +47,29 @@ fightState.prototype.create = function (l) {
   console.log(currentLevel);
   if (currentLevel==1){ // assign enemy stats per level
     this.enemy.attack = 1;
-    this.enemy.defense = 1;
     this.enemy.speed = 1;
     this.enemy.health = 10;
     this.enemy.skill = 1;
   }
   else if (currentLevel==2){
-    this.enemy.attack = 1;
-    this.enemy.defense = 1;
+    this.enemy.attack = 2;
     this.enemy.speed = 2;
     this.enemy.health = 10;
     this.enemy.skill = 2;
   }
   else if (currentLevel==3){
     this.enemy.attack = 2;
-    this.enemy.defense = 1;
     this.enemy.speed = 3;
     this.enemy.health = 15;
     this.enemy.skill = 3;
   }
   else if (currentLevel==4){
-    this.enemy.attack = 3;
-    this.enemy.defense = 1;
+    this.enemy.attack = 2;
     this.enemy.speed = 4;
     this.enemy.health = 20;
     this.enemy.skill = 4;
   }
-
+  this.enemy.defense = 0;
   this.enemy.scale.x *= -1;
   this.enemy.state = "ready to act"; // stores the current state of the enemy
   this.enemy.action = "null"; // stores the current action ie. blocking, attacking
@@ -93,9 +89,9 @@ fightState.prototype.create = function (l) {
 
 	this.player.animations.add('idle', [24,25,26,30,31,32],framerate);
   this.player.animations.add('high attack', [3,4,5,9,10,11],framerate);
-  this.player.animations.add('high block',  [12,13,14,18],framerate/2);
+  this.player.animations.add('high block',  [12,13,14,18],framerate);
   this.player.animations.add('low attack', [27,28,29,33,34,35],framerate);
-  this.player.animations.add('low block',   [ 36, 37, 38, 42, 43],framerate/2);
+  this.player.animations.add('low block',   [ 36, 37, 38, 42, 43],framerate);
   this.player.animations.add('hurt', [15,16,17],framerate);
   this.player.animations.add('death', [0,1,2,6,7],framerate);
   this.player.animations.play("idle",framerate,true);
@@ -342,8 +338,8 @@ fightState.prototype.setPlayerState = function(state){
 };
 
 fightState.prototype.DamageCalc = function (attacker,defender){
-	defender.health = game.math.max(0,(defender.health - attacker.attack));
-  console.log(attacker.attack);
+	defender.health = game.math.max(0,(defender.health - (attacker.attack - defender.defense)));
+  console.log(attacker.attack, defender.defense)
 };
 
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
@@ -352,9 +348,13 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     if(player.state === "idle"){
       if(actionVariable > (0.8 - enemy.skill *0.05)){
         enemy.actionSequence = ["high attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["high attack","high attack", "low attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["high attack","high attack"];
       }
       if(actionVariable > (0.55  - enemy.skill *0.1)&& actionVariable <=(0.8 - enemy.skill *0.05)){
         enemy.actionSequence = ["low attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["low attack","high attack", "low attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["low attack","high attack"];
       }
       if(actionVariable > (0.3 - enemy.skill *0.05) && actionVariable <= (0.55 - enemy.skill*0.1)){
         enemy.actionSequence = ["high block"];
@@ -366,9 +366,13 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     else if(player.state === "high attack"){
       if(actionVariable > (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["high attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["high attack","low attack", "low attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["high attack","low attack"];
       }
         if(actionVariable > (0.6 + 0.1 *enemy.skill) && actionVariable <= (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["low attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["high attack","low attack", "high attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["low attack","low attack"];
       }
       if(actionVariable > (0.3 + 0.05 * enemy.skill) && actionVariable <= (0.6 + 0.1 *enemy.skill)){
         enemy.actionSequence = ["high block"];
@@ -380,9 +384,13 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     else if(player.state === "low attack"){
       if(actionVariable > (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["high attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["high attack","high attack", "high attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["high attack","high attack"];
       }
       if(actionVariable > (0.6 + 0.1 *enemy.skill) && actionVariable <= (0.8+0.05*enemy.skill)){
         enemy.actionSequence = ["low attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["low attack","low attack", "low attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["low attack","low attack"];
       }
       if(actionVariable > (0.3 + 0.05 * enemy.skill) && actionVariable <= (0.6 + 0.1 *enemy.skill)){
         enemy.actionSequence = ["high block"];
@@ -394,9 +402,13 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     else if(player.state === "high block"){
       if(actionVariable > (0.8 - 0.15 * enemy.skill)){
         enemy.actionSequence = ["low attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["low attack","high attack", "low attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["high attack","low attack"];
       }
       if(actionVariable > (0.4-0.1*enemy.skill) && actionVariable <= (0.8 - 0.15 * enemy.skill)){
         enemy.actionSequence = ["high attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["low attack","low attack", "high attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["low attack","high attack"];
       }
       if(actionVariable >(0.2 - 0.05*enemy.skill)  && actionVariable <= (0.4-0.1*enemy.skill)){
         enemy.actionSequence = ["high block"];
@@ -408,9 +420,13 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
     else if(player.state === "low block"){
       if(actionVariable > (0.8 - 0.15 * enemy.skill)){
         enemy.actionSequence = ["high attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["low attack","low attack", "high attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["low attack","high attack"];
       }
       if(actionVariable > (0.4-0.1*enemy.skill) && actionVariable <= (0.8 - 0.15 * enemy.skill)){
         enemy.actionSequence = ["low attack"];
+        if (enemy.speed === 4)enemy.actionSequence = ["low attack","low attack", "high attack"];
+        if (enemy.speed === 3)enemy.actionSequence = ["low attack","high attack"];
       }
       if(actionVariable >(0.2 - 0.05*enemy.skill)  && actionVariable <= (0.4-0.1*enemy.skill)){
         enemy.actionSequence = ["high block"];
