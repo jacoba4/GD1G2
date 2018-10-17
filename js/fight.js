@@ -78,18 +78,18 @@ fightState.prototype.create = function (l) {
   this.enemy.active = true;
 
 	this.enemy.animations.add('idle', [24,25,26,30,31,32],framerate);
-	this.enemy.animations.add('high attack',[3,4,5,9,10,11],framerate*this.enemy.speed);
+	this.enemy.animations.add('high attack',[ 3, 4, 4, 5, 5, 9,10,11],framerate*this.enemy.speed);
 	this.enemy.animations.add('high block', [12,13,14,18],framerate*this.enemy.speed);
-	this.enemy.animations.add('low attack', [27,28,29,33,34,35],framerate*this.enemy.speed);
+	this.enemy.animations.add('low attack', [27,27,28,28,29,33,34,35],framerate*this.enemy.speed);
 	this.enemy.animations.add('low block',  [ 36, 37, 38, 42, 43],framerate*this.enemy.speed);
 	this.enemy.animations.add('hurt', [15,16,17],framerate*this.enemy.speed);
 	this.enemy.animations.add('death', [0,1,2,6,7],framerate);
 
 	this.player.animations.add('idle', [24,25,26,30,31,32],framerate);
   this.player.animations.add('high attack', [3,4,5,9,10,11],framerate);
-  this.player.animations.add('high block',  [12,13,14,18],framerate);
+  this.player.animations.add('high block',  [12,13,14,18],framerate/2);
   this.player.animations.add('low attack', [27,28,29,33,34,35],framerate);
-  this.player.animations.add('low block',   [ 36, 37, 38, 42, 43],framerate);
+  this.player.animations.add('low block',   [ 36, 37, 38, 42, 43],framerate/2);
   this.player.animations.add('hurt', [15,16,17],framerate);
   this.player.animations.add('death', [0,1,2,6,7],framerate);
 
@@ -223,7 +223,7 @@ fightState.prototype.updatePlayerAction = function (player) {
       }
     }
     if (player.state === "low block"){
-      if (player.actionTimer > 60 && player.actionTimer < 60){
+      if (player.actionTimer > 0 && player.actionTimer < 60){
         player.action = "low block";
       }
       else {
