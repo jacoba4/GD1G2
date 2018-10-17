@@ -42,7 +42,7 @@ mainMenuState.prototype.create = function () {
   tapText = game.add.text(1050, 970, 'tap to begin', style); //font for tap to begin
   tapText.alpha = 0;
   game.add.tween(tapText).to( { alpha: 1 }, 1000, Phaser.Easing.Linear.None, true, 0, 2000, true);
-  game.time.events.repeat(Phaser.Timer.SECOND * 5, 20, createClouds, this);
+  game.time.events.repeat(Phaser.Timer.SECOND * 5, 20, this.createClouds, this);
 
 
 }
