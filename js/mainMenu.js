@@ -51,12 +51,13 @@ mainMenuState.prototype.createClouds = function () {
   cloud = game.add.sprite(0, 0, 'cloud');
   cloud.scale.setTo(0.8,0.5);
   pink_cloud = game.add.sprite(300, 40, 'pinkcloud');
+  game.physics.enable(cloud, Phaser.Physics.ARCADE);
+  game.physics.enable(pink_cloud, Phaser.Physics.ARCADE);
   cloud.alpha = 0.4;
   pink_cloud.alpha = 0.3;
   cloud.body.velocity.x = 20;
   pink_cloud.body.velocity.x = 20;
-  game.physics.enable(cloud, Phaser.Physics.ARCADE);
-  game.physics.enable(pink_cloud, Phaser.Physics.ARCADE);
+
 
 }
 
