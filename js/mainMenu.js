@@ -34,6 +34,7 @@ mainMenuState.prototype.update = function () {
   }
   if(justclicked){
     justclicked = false;
+    menu_music.pause();
     game.state.start('Story1');
   }
 
