@@ -17,6 +17,7 @@ mainMenuState.prototype.create = function () {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   //assign all images
   cloud = game.add.sprite(0, 0, 'cloud');
+  sand1 = game.add.sprite(50, 1100, 'sand_wave');
   cloud.scale.setTo(0.8,0.5);
   c1 = game.add.sprite(690, 30, 'cloud');
   c1.scale.setTo(0.9, 0.6);
@@ -34,7 +35,7 @@ mainMenuState.prototype.create = function () {
   pink_cloud.body.velocity.x = 20;
   c1.body.velocity.x = 20;
   p1.body.velocity.x = 20;
-  sand1 = game.add.sprite(50, 1100, 'sand_wave');
+
   //tween_cloud = game.add.tween(cloud);
   //tween_cloud.repeat(10, 4000);
   //editing transparency and scale
