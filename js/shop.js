@@ -8,17 +8,22 @@ let shop_text;
 let continue_button;
 let button_enabled;
 
+
 shopState.prototype.create = function () {
   //add menu buttons, animations, and shop music
   game.add.sprite(0,0,"shop");
   shop_text = game.add.bitmapText(550, 250, 'ancientFont', 'CHOOSE A POWERUP', 45);
   shop_text.aplha = 0;
   game.add.tween(shop_text).to( { alpha: 2 }, 5000, Phaser.Easing.Linear.None, true);
-  shopMusic = game.sound.play('menuMusic');
+
   //adding the relics
   sacred_t = game.add.sprite(410, 550, 'sacred_tooth');
   spear_ = game.add.sprite(750, 680, 'spear');
   shield_ = game.add.sprite(1220, 430, 'shield');
+  entering_shop = true;
+  if(entering_shop == true){
+    shopMusic = game.sound.play('menuMusic');
+  }
 //if the relics had been used, they will be dulled
   if(tooth_used == true){
     sacred_t.alpha = 0.3;
@@ -102,6 +107,11 @@ function checkAndChange() {
   if(shield_.alpha == 1){
     shield_used = true;
   }
+  entering_shop = false;
+  if(entering_shop == false){
+    shopMusic.pause();
+  }
+
   this.NextLevel();
 
 
