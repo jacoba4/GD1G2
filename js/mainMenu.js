@@ -5,13 +5,20 @@ let style;
 let tapText;
 let menu_music;
 let cloud;
+let pink_cloud;
 
 mainMenuState.prototype.create = function () {
   //add menu buttons, animations, and title music
-//  game.add.sprite(10, 10, 'cloud');
   game.add.sprite(0,0,"title");
-  game.add.sprite(20, 20, 'cloud');
-  menu_music = game.sound.play('menuMusic');
+  cloud = game.add.sprite(0, 0, 'cloud'); //first cloud instance
+  pink_cloud = game.add.sprite(5, 20, 'pinkCloud');
+  //editing transparency and scale
+  cloud.scale.setTo(0.8,0.5);
+  cloud.alpha = 0.4;
+  //adding physics so cloud can move across screen
+  game.physics.enable(cloud, Phaser.Physics.ARCADE);
+  cloud.body.velocity.x = 20;
+  menu_music = game.sound.play('menuMusic'); //adding theme music
   ancientText = game.add.bitmapText(300, 150, 'ancientFont', 'The Kingphant of Anuradhapura', 75); //load the title
   ancientText.alpha = 1;
   game.add.tween(ancientText).to( { alpha: 2 }, 5000, Phaser.Easing.Linear.None, true);
