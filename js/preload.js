@@ -4,8 +4,7 @@ preloadSate.prototype.preload = function () {
   game.load.image("title","assets/backgrounds/titleScreen_bg.png");
   game.load.image("shop","assets/backgrounds/shop.png");
   game.load.image("fight","assets/backgrounds/fight_bg.png");
-  game.load.image("victory","assets/backgrounds/victory_bg.png");
-  game.load.image("playbutton","assets/playbutton.png");
+  game.load.image("Victory","assets/backgrounds/victory_bg.png");
   game.load.bitmapFont('ancientFont', 'assets/fonts/ancientFont.png', 'assets/fonts/ancientFont.fnt');
   game.load.image('cloud', 'assets/cloud-overlays-png.png');
   game.load.audio('menuMusic', 'assets/music/MenuMusic.wav');
@@ -20,6 +19,24 @@ preloadSate.prototype.preload = function () {
   game.load.image('sacred_tooth', 'assets/sprites/relics/sacredTooth.png');
   game.load.image('shield', 'assets/sprites/relics/shield.png');
   game.load.image('spear', 'assets/sprites/relics/spear.png');
+  game.load.audio('fightmusic', 'assets/music/CombatSong.wav');
+  game.load.spritesheet('playeridle', 'assets/sprites/Elephants/elephant1_all.png',1150,825);
+  game.load.spritesheet("enemy1idle", "assets/sprites/Elephants/elephant3_all.png",1150,825);
+  game.load.spritesheet("enemy2idle", "assets/sprites/Elephants/elephant4_all.png",1150,825);
+  game.load.spritesheet("enemy3idle", "assets/sprites/Elephants/elephant5_all.png",1150,825);
+  game.load.spritesheet("enemy4idle", "assets/sprites/Elephants/elephant2_all.png",1150,825);
+  game.load.audio('winmusic', 'assets/sounds/VictorySound.wav');
+  game.load.image('VictoryText', 'assets/storyScreens/storyVictory.png');
+  game.load.audio('losemusic', 'assets/sounds/DefeatSound.wav');
+  game.load.image('loss', 'assets/backgrounds/lose_bg.png');
+  game.load.image('losstext', 'assets/storyScreens/storyDefeat.png');
+  game.load.audio('lowattacksound', 'assets/sounds/shortTrumpet.wav');
+  game.load.audio('highattacksound', 'assets/sounds/AttackSound1.wav');
+  game.load.audio('hitsound', 'assets/sounds/elephantScream.wav');
+  game.load.audio('dodge', 'assets/sounds/DodgeSound.wav');
+  game.load.image('sacred_tooth', 'assets/sprites/Relics/sacredTooth.png');
+  game.load.image('shield', 'assets/sprites/Relics/shield.png');
+  game.load.image('spear', 'assets/sprites/Relics/spear.png');
   game.load.audio('fightmusic', 'assets/music/CombatSong.wav')
 };
 

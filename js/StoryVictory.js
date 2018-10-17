@@ -2,6 +2,7 @@ let VictoryState = function(){};
 
 VictoryState.prototype.create = function(){
 	 game.add.sprite(0,0,"Victory");
+	 game.add.sprite(0,0,"VictoryText");
 }
 
 VictoryState.prototype.update = function(){
