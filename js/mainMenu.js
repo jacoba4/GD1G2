@@ -33,6 +33,7 @@ mainMenuState.prototype.create = function () {
   pink_cloud.body.velocity.x = 20;
   c1.body.velocity.x = 20;
   p1.body.velocity.x = 20;
+
   //tween_cloud = game.add.tween(cloud);
   //tween_cloud.repeat(10, 4000);
   //editing transparency and scale
