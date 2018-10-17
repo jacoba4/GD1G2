@@ -23,7 +23,7 @@ preloadSate.prototype.preload = function () {
 };
 
 preloadSate.prototype.create = function () {
-  //game.state.start("MainMenu");
-  game.state.start('Shop');
+  game.state.start("MainMenu");
+  //game.state.start('Shop');
 
 };
