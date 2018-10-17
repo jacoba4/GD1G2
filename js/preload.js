@@ -30,8 +30,14 @@ preloadSate.prototype.preload = function () {
   game.load.audio('highattacksound', 'assets/sounds/AttackSound1.wav');
   game.load.audio('hitsound', 'assets/sounds/elephantScream.wav');
   game.load.audio('dodge', 'assets/sounds/DodgeSound.wav');
+  game.load.image('sacred_tooth', 'assets/sprites/Relics/sacredTooth.png');
+  game.load.image('shield', 'assets/sprites/Relics/shield.png');
+  game.load.image('spear', 'assets/sprites/Relics/spear.png');
+  game.load.audio('fightmusic', 'assets/music/CombatSong.wav')
 };
 
 preloadSate.prototype.create = function () {
   game.state.start("MainMenu");
+  //game.state.start('Shop');
+
 };

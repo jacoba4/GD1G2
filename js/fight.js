@@ -32,11 +32,14 @@ fightState.prototype.create = function (l) {
   this.player.actionframe = 0;
   this.player.actionTimer = 0;
 
-
-  this.player.attack = playeratt;
-  this.player.defense = playerdef;
+  if(spear_used)this.player.attack = 2;
+  else this.player.attack = 1;
+  if(shield_used)this.player.defense = 2;
+  else this.player.defense = 1;
+  if(tooth_used)this.player.health = 15;
+  else this.player.health = 10;
   this.player.speed = 3;
-  this.player.health = playerhealth;
+
 
   this.playerhptext = game.add.text(16, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
   this.enemyhptext = game.add.text(1550, 16, "HP: ", {fontSize: "128px", fill: "#000000"});
@@ -340,6 +343,7 @@ fightState.prototype.setPlayerState = function(state){
 
 fightState.prototype.DamageCalc = function (attacker,defender){
 	defender.health = game.math.max(0,(defender.health - attacker.attack));
+  console.log(attacker.attack);
 };
 
 fightState.prototype.enemyBehavior = function (player,enemy) { //determines what actions the enemy should take
