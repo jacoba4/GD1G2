@@ -52,22 +52,22 @@ fightState.prototype.create = function (l) {
   else if (currentLevel==2){
     this.enemy.attack = 1;
     this.enemy.defense = 1;
-    this.enemy.speed = 1.25;
+    this.enemy.speed = 2;
     this.enemy.health = 10;
     this.enemy.skill = 2;
   }
   else if (currentLevel==3){
     this.enemy.attack = 2;
     this.enemy.defense = 1;
-    this.enemy.speed = 1.25;
-    this.enemy.health = 10;
+    this.enemy.speed = 3;
+    this.enemy.health = 15;
     this.enemy.skill = 3;
   }
   else if (currentLevel==4){
     this.enemy.attack = 3;
     this.enemy.defense = 1;
-    this.enemy.speed = 1.25;
-    this.enemy.health = 10;
+    this.enemy.speed = 4;
+    this.enemy.health = 20;
     this.enemy.skill = 4;
   }
 
@@ -80,13 +80,13 @@ fightState.prototype.create = function (l) {
   this.enemy.active = true;
 
 	this.enemy.animations.add('idle', [24,25,26,30,31,32],framerate);
-	this.enemy.animations.add('high attack',[ 3, 4, 4, 5, 5, 9,10,11],framerate*this.enemy.speed);
-	this.enemy.animations.add('high block', [12,13,14,18],framerate*this.enemy.speed);
-	this.enemy.animations.add('low attack', [27,27,28,28,29,33,34,35],framerate*this.enemy.speed);
-	this.enemy.animations.add('low block',  [ 36, 37, 38, 42, 43],framerate*this.enemy.speed);
-	this.enemy.animations.add('hurt', [15,16,17],framerate*this.enemy.speed);
+	this.enemy.animations.add('high attack',[ 3, 4, 4, 5, 5, 9,10,11],framerate);
+	this.enemy.animations.add('high block', [12,13,14,18],framerate);
+	this.enemy.animations.add('low attack', [27,27,28,28,29,33,34,35],framerate);
+	this.enemy.animations.add('low block',  [ 36, 37, 38, 42, 43],framerate);
+	this.enemy.animations.add('hurt', [15,16,17],framerate);
 	this.enemy.animations.add('death', [0,1,2,6,7],framerate);
-  this.enemy.animations.play("idle",framerate*this.enemy.speed,true);
+  this.enemy.animations.play("idle",framerate,true);
 
 	this.player.animations.add('idle', [24,25,26,30,31,32],framerate);
   this.player.animations.add('high attack', [3,4,5,9,10,11],framerate);
@@ -421,7 +421,7 @@ fightState.prototype.enemyBehavior = function (player,enemy) { //determines what
   }
   else if (enemy.state === "mid action") { // ensure the enemy carries out the decided upon actions
     if (enemy.actionSequence.length>0){
-      enemy.actionTimer+=enemy.speed;
+      enemy.actionTimer++;
       if(enemy.actionTimer>48){
         enemy.actionSequence.shift();
         enemy.actionTimer = 0;
